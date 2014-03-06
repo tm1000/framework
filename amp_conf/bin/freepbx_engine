@@ -164,7 +164,7 @@ fi
 if [ ! -d "$ASTRUNDIR"  -a ! -h "$ASTRUNDIR" ]; then
 	echo "**** WARNING: ERROR IN CONFIGURATION ****"
 	echo "astrundir in '$ASTETCDIR' is set to $ASTRUNDIR but the directory"
-	echo "does not exists. Attempting to create it with: 'mkdir -p $ASTRUNDIR'"
+	echo "does not exist. Attempting to create it with: 'mkdir -p $ASTRUNDIR'"
 	echo
 	mkdir -p $ASTRUNDIR
 	RET=$?
