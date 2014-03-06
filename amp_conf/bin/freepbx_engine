@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+# vim: :set filetype=sh tabstop=4 shiftwidth=4 autoindent smartindent:
 
 # Visual formating variables
 # use like: ${b}text$bx - ${b} starts bold, $bx end it, etc.
 # you must use echo -e for formating to be valid
-b="\033[1m"
-bx="\033[0m"
+b="\e[1m"
+bx="\e[0m"
 u="\e[4m"
 ux="\e[0m"
 
@@ -18,6 +19,24 @@ then
 	echo "Sorry, you must be root to run this script."
 	echo
 	exit $E_NOTROOT
+fi
+
+# Check for High Availability Services, and don't start asterisk
+# automatically if they exist.
+if [ -f /etc/drbd.d/asterisk.res ]
+then
+	# Let the check be bypassed if it's triggering incorrectly
+	if [ "$1" = "--ignoreha" ]
+	then
+		echo -e ${b}HA Detected and IGNORED${bx}
+		HA=""
+		shift
+	else
+		echo -e "${b}HA Detected${bx} use --ignoreha to bypass"
+		HA=true
+	fi
+else
+	HA=""
 fi
 
 # function to eventually get freepbx.conf to /etc 
@@ -264,8 +283,7 @@ chown_asterisk() {
 	# Ensure default php session directory is owned by asterisk web user since some yum updates break this
 	# this is the default CentOS location, may not work for other Linux distros
 	[ -d /var/lib/php/session ] && chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP /var/lib/php/session
-	[ -d $AMPWEBROOT ] && chown $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $AMPWEBROOT
-	[ -d $AMPWEBROOT ] && chown $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $AMPWEBROOT/*
+	[ -d $AMPWEBROOT ] && chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $AMPWEBROOT
 
 	echo Permissions OK
 	call_hook chown_asterisk
@@ -302,8 +320,10 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 }
 
 run_asterisk() {
-# check to see if asterisk is running
-echo
+	if [ $HA ]
+	then
+		echo -e "${b}Not starting Asterisk${bx} due to High Availablity being detected"
+	else
 echo "STARTING ASTERISK"
 pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 	if [ "$pid_length" != "0" -a "$pid_length" != "" ]
@@ -326,9 +346,14 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 			fi
 		fi
 	call_hook run_asterisk
+fi
 }
 
 stop_asterisk() {
+	if [ $HA ]
+	then
+		echo -e "${b}Not stopping Asterisk${bx} due to High Availablity being detected"
+	else
 echo
 echo "STOPPING ASTERISK"
 echo "Waiting for Asterisk to Stop Gracefully..."
@@ -419,6 +444,7 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 
 		fi
 	call_hook stop_asterisk
+fi
 }
 
 kill_amp() {
@@ -568,13 +594,14 @@ ${b}unlock$bx|${b}u$bx:	Unlock the web gui from the cli (requires root)
 		if [ "$?" -ne "0" ]; then
 			echo "-------------FreePBX Control Script-----------------------------------------------"
 			echo
-			echo "Usage:       amportal start|stop|restart|kill|chown"
+			echo "Usage:       amportal start|stop|restart|kill|chown|admin"
 			echo
 			echo "start:       Starts Asterisk and Flash Operator Panel server if enabled"
 			echo "stop:        Gracefully stops Asterisk"
 			echo "restart:     Stop and Starts"
 			echo "kill:        Kills Asterisk"
 			echo "chown:       Sets appropriate permissions on files"
+			echo "admin:       Performs administrative functions to FreePBX"
 			echo
 			call_hook help
 			exit 1
