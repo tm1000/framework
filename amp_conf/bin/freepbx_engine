@@ -145,30 +145,35 @@ if [ -e $AMPBIN/amportal ]; then
   chmod +x $AMPSBIN/amportal
 fi
 
-if [ "$ASTRUNDIR" = "/var/run" ]
-  then
-    echo "**** ERROR IN CONFIGURATION ****"
-    echo "astrundir in '$ASTETCDIR' is set to '/var/run' - THIS IS WRONG."
-    echo "Please change it to something sensible (eg, '/var/run/asterisk') and re-run"
-    echo "install_amp"
-    exit;
+if [ ! $ASTRUNDIR ]; then
+	echo -e "***** ${b}FATAL ERROR${bx} *****"
+	echo "I was unable to determine ASTRUNDIR. This is often caused by MySQL (or which ever"
+	echo "datbase engine you are using) being down, or the unreachable for some reason."
+	echo "I am unable to start Asterisk. Sorry."
+	exit
 fi
 
-if [ ! -d "$ASTRUNDIR" ]
-  then
-    echo "**** WARNING: ERROR IN CONFIGURATION ****"
-    echo "astrundir in '$ASTETCDIR' is set to $ASTRUNDIR but the directory"
-		echo "does not exists. Attempting to create it with: 'mkdir -p $ASTRUNDIR'"
-		echo
-		mkdir -p $ASTRUNDIR
-		RET=$?
-		if [ $RET != 0 ]
-		then
-    	echo "**** ERROR: COULD NOT CREATE $ASTRUNDIR ****"
-			echo "Attempt to execute 'mkdir -p $ASTRUNDIR' failed with an exit code of $RET"
-    	echo "You must create this directory and the try again."
-			exit
-		fi
+if [ "$ASTRUNDIR" = "/var/run" ]; then
+	echo "**** ERROR IN CONFIGURATION ****"
+	echo "astrundir in '$ASTETCDIR' is set to '/var/run' - THIS IS WRONG."
+	echo "Please change it to something sensible (eg, '/var/run/asterisk') and re-run"
+	echo "install_amp"
+	exit
+fi
+
+if [ ! -d "$ASTRUNDIR"  -a ! -h "$ASTRUNDIR" ]; then
+	echo "**** WARNING: ERROR IN CONFIGURATION ****"
+	echo "astrundir in '$ASTETCDIR' is set to $ASTRUNDIR but the directory"
+	echo "does not exists. Attempting to create it with: 'mkdir -p $ASTRUNDIR'"
+	echo
+	mkdir -p $ASTRUNDIR
+	RET=$?
+	if [ $RET != 0 ]; then
+		echo "**** ERROR: COULD NOT CREATE $ASTRUNDIR ****"
+		echo "Attempt to execute 'mkdir -p $ASTRUNDIR' failed with an exit code of $RET"
+		echo "You must create this directory and the try again."
+		exit
+	fi
 fi
 
 ############ freepbx_engine_hooks #########################
