@@ -3,11 +3,11 @@ php:
   - "5.3"
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install asterisk php5 apache2 php5-cli -qq
+  - sudo apt-get install asterisk php5 apache2 php5-cli php-pear -qq
   - sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini
   - sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig
   - sudo sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
-  - sudo service apache2 restart
+  - sudo service apache2 start
   - sudo pear install db
   - sudo adduser asterisk --disabled-password --no-create-home --gecos "Asterisk User"
   - sudo chown asterisk. /var/run/asterisk
