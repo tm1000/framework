@@ -32,4 +32,8 @@ before_script:
   - sudo service apache2 restart
 script: 
   - phpunit tests
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/ModulesTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/RequestTest.php
