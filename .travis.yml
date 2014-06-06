@@ -9,7 +9,6 @@ before_install:
   - sudo sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
   - sudo service apache2 start
   - sudo pear install db
-  - sudo adduser asterisk --disabled-password --no-create-home --gecos "Asterisk User"
   - sudo chown asterisk. /var/run/asterisk
   - sudo chown -R asterisk. /etc/asterisk
   - sudo chown -R asterisk. /var/{lib,log,spool}/asterisk
