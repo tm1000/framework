@@ -21,7 +21,7 @@ before_install:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON asteriskcdrdb.* TO asteriskuser@localhost IDENTIFIED BY 'amp109';"
   - mysql -u root -e "flush privileges;"
   - sudo ./start_asterisk start
+install:
   - sudo ./install_amp --installdb --skip-module-install --scripted
-  - sudo amportal chown
   - sudo amportal a r
   - ls /etc/asterisk
