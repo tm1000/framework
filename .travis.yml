@@ -4,6 +4,7 @@ php:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install asterisk php5 apache2 php5-cli php-pear php5-mysql -qq
+  - sudo rm -Rf /etc/asterisk/*
   - sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini
   - sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig
   - sudo sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
