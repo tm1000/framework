@@ -5,9 +5,6 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install asterisk php5 apache2 php5-cli php-pear php5-mysql libapache2-mod-fastcgi -qq
   - sudo rm -Rf /etc/asterisk/*
-  - sudo sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
-  - sudo service apache2 start
-  - sudo service apache2 reload
   - sudo pear install db
   - sudo chown asterisk. /var/run/asterisk
   - sudo chown -R asterisk. /etc/asterisk
