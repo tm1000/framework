@@ -19,7 +19,7 @@ before_install:
   - mysql -u root -e "flush privileges;"
   - sudo ./start_asterisk start
 install:
-  - sudo ./install_amp --installdb --skip-module-install --scripted --username asterisk --password amp109
+  - sudo ./install_amp --installdb --skip-module-install --scripted --username asterisk --password amp109 --dbhost localhost --dbname asterisk
   - sudo amportal a r
   - ls /etc/asterisk
 before_script:
