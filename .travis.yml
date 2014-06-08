@@ -32,10 +32,11 @@ before_script:
   - sudo service apache2 restart
   - sudo chmod 777 /etc/freepbx.conf
   - sudo chmod 777 -R /var/www
+  - su asterisk
 script: 
-  - sudo /home/travis/.phpenv/shims/phpunit tests
-  - sudo /home/travis/.phpenv/shims/phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
-  - sudo /home/travis/.phpenv/shims/phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
-  - sudo /home/travis/.phpenv/shims/phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
-  - sudo /home/travis/.phpenv/shims/phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/ModulesTest.php
-  - sudo /home/travis/.phpenv/shims/phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/RequestTest.php
+  - phpunit tests
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/ModulesTest.php
+  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/RequestTest.php
