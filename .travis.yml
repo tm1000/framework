@@ -33,7 +33,7 @@ before_script:
   - sudo chmod 777 /etc/freepbx.conf
   - sudo chmod 777 -R /var/www
   - sudo chmod 777 -R /etc/asterisk
-  - sudo useradd -G asterisk travis
+  - sudo usermod -a -G asterisk travis
 script: 
   - phpunit tests
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
