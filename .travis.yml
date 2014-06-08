@@ -33,7 +33,7 @@ before_script:
   - sudo chmod 777 /etc/freepbx.conf
   - sudo chmod 777 -R /var/www
 script: 
-  - which phpunit
+  - sudo export PATH=$PATH:/home/travis/.phpenv/shims/phpunit
   - phpunit tests
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
