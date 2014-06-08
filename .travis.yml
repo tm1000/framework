@@ -32,7 +32,7 @@ before_script:
   - sudo service apache2 restart
   - sudo chmod 777 /etc/freepbx.conf
   - sudo chmod 777 -R /var/www
-  - su asterisk
+  - sudo su asterisk
 script: 
   - phpunit tests
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
