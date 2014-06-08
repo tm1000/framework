@@ -30,9 +30,9 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
-  - chmod 777 /etc/freepbx.conf
+  - sudo chmod 777 /etc/freepbx.conf
 script: 
-  - phpunit tests
+  - sudo phpunit tests
   - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
   - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
   - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
