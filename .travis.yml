@@ -3,7 +3,7 @@ php:
   - "5.3"
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install asterisk php5 apache2 php5-cli php-pear php5-mysql libapache2-mod-fastcgi -qq
+  - sudo apt-get install alien dpkg-dev debhelper build-essential asterisk php5 apache2 php5-cli php-pear php5-mysql libapache2-mod-fastcgi -qq
   - sudo rm -Rf /etc/asterisk/*
   - sudo pear install db
   - sudo chown asterisk. /var/run/asterisk
@@ -31,7 +31,9 @@ before_script:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
   - sudo chmod 777 /etc/freepbx.conf
+  - sudo chmod 777 -R /var/www
 script: 
+  - which phpunit
   - phpunit tests
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
