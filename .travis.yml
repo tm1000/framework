@@ -34,9 +34,9 @@ before_script:
   - sudo chmod 777 -R /var/www
 script: 
   - sudo export PATH=$PATH:/home/travis/.phpenv/shims/phpunit
-  - phpunit tests
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/ModulesTest.php
-  - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/RequestTest.php
+  - sudo phpunit tests
+  - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
+  - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/DBHelperTest.php
+  - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/GPGTest.php
+  - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/ModulesTest.php
+  - sudo phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/RequestTest.php
