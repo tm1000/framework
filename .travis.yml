@@ -6,12 +6,12 @@ before_install:
   - sudo apt-get install alien dpkg-dev debhelper build-essential asterisk php5 apache2 php5-cli php-pear php5-mysql libapache2-mod-fastcgi -qq
   - sudo rm -Rf /etc/asterisk/*
   - sudo pear install db
-  - sudo chown asterisk. /var/run/asterisk
-  - sudo chown -R asterisk. /etc/asterisk
-  - sudo chown -R asterisk. /var/{lib,log,spool}/asterisk
-  - sudo chown -R asterisk. /usr/lib/asterisk
+  - sudo chown $USER /var/run/asterisk
+  - sudo chown -R $USER /etc/asterisk
+  - sudo chown -R $USER /var/{lib,log,spool}/asterisk
+  - sudo chown -R $USER /usr/lib/asterisk
   - sudo mkdir /var/www/html
-  - sudo chown -R asterisk. /var/www/
+  - sudo chown -R $USER /var/www/
   - mysqladmin -u root create asterisk
   - mysqladmin -u root create asteriskcdrdb
   - mysql -u root -e "GRANT ALL PRIVILEGES ON asterisk.* TO asteriskuser@localhost IDENTIFIED BY 'amp109';"
@@ -32,8 +32,8 @@ before_script:
   - sudo service apache2 restart
   - sudo chmod 777 /etc/freepbx.conf
   - sudo chmod 777 -R /var/www
-  - sudo passwd -d asterisk
-  - su asterisk
+  - sudo chomd 777 -R /etc/asterisk
+  - useradd -G asterisk travis
 script: 
   - phpunit tests
   - phpunit amp_conf/htdocs/admin/libraries/BMO/Tests/CronTest.php
