@@ -1241,7 +1241,9 @@ class Moduleadmin extends Command {
 					$sigfile = $this->FreePBX->Config->get('AMPWEBROOT') . "/admin/modules/" . $name . "/module.sig";
 					$sig = $this->FreePBX->GPG->checkSig($sigfile);
 					if(in_array($sig['config']['signedwith'], array('B53D215A755231A3','86CE877469D2EAD9'))) {
-						$module_Signature = 'Sangoma';
+						$module_Signature = 'Sangoma';		
+					} else if(in_array($sig['config']['signedwith'], array('60FEE7E638AF1C5C', '9EF963322ADD7ACC', '3E4798F3798F1522'))) {
+						$module_Signature = 'ClearlyIP';
 					} else {
 						$module_Signature = 'Unknown';
 					}
